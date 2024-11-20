@@ -1,26 +1,27 @@
 const postList = require("../data/posts.js");
 
-function index(res) {
-    console.log("index");
+function index(req, res) {
+    //console.log("index");
+    res.json(postList);
 }
 
-function show() {
+function show(req, res) {
     console.log("show");
 }
 
-function store() {
+function store(req, res) {
     console.log("store");
 }
 
-function update() {
+function update(req, res) {
     console.log("update");
 }
 
-function modify() {
+function modify(req, res) {
     console.log("modify");
 }
 
-function destroy() {
+function destroy(req, res) {
     console.log("destroy");
 }
 
