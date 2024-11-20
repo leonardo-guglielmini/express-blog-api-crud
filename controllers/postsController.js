@@ -2,7 +2,17 @@ const postList = require("../data/posts.js");
 
 function index(req, res) {
     //console.log("index");
-    res.json(postList);
+    let taggedPostList = postList;
+    //console.log(req);
+
+    if (req.query.tag) {
+        //console.log(req.query.tag);
+        let tag = req.query.tag.charAt(0).toUpperCase() + req.query.tag.slice(1)
+        //console.log(tag);
+        taggedPostList = postList.filter((post) => { return post.tags.includes(tag) });
+    }
+
+    res.json(taggedPostList);
 }
 
 function show(req, res) {
