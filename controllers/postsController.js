@@ -17,7 +17,15 @@ function index(req, res) {
 
 function show(req, res) {
     //console.log("show");
-    res.json(postList.find((post) => post.slug === req.params.slug));
+    let post = postList.find((post) => post.slug === req.params.slug)
+
+    if (!post) {
+        res.status(404);
+        post = {
+            error: "Post not found"
+        }
+    }
+    res.json(post);
 }
 
 function store(req, res) {
@@ -34,8 +42,15 @@ function modify(req, res) {
 
 function destroy(req, res) {
     //console.log("destroy");
+
     let destroyIndex = postList.findIndex((post) => post.slug === req.params.slug);
     //console.log(destroyIndex);
+
+    if (destroyIndex === -1) {
+        res.status(404);
+        return res.json({ error: "Post not found" });
+    }
+
     postList.splice(destroyIndex, 1);
 
     res.status(204);
