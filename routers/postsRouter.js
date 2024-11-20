@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
     functions.index(req, res);
 });
 
-router.get("/:slug", (req, res) => {
+router.get("/:id", (req, res) => {
     functions.show(req, res);
 });
 
@@ -15,15 +15,15 @@ router.post("/", (req, res) => {
 
 });
 
-router.put("/:slug", (req, res) => {
+router.put("/:id", (req, res) => {
 
 });
 
-router.patch("/:slug", (req, res) => {
+router.patch("/:id", (req, res) => {
 
 });
 
-router.delete("/:slug", (req, res) => {
+router.delete("/:id", (req, res) => {
     functions.destroy(req, res);
 });
 

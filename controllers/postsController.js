@@ -17,7 +17,7 @@ function index(req, res) {
 
 function show(req, res) {
     //console.log("show");
-    let post = postList.find((post) => post.slug === req.params.slug)
+    let post = postList.find((post) => post.slug === req.params.id || post.id === req.params.id)
 
     if (!post) {
         res.status(404);
@@ -43,7 +43,7 @@ function modify(req, res) {
 function destroy(req, res) {
     //console.log("destroy");
 
-    let destroyIndex = postList.findIndex((post) => post.slug === req.params.slug);
+    let destroyIndex = postList.findIndex((post) => post.slug === req.params.id || post.id === req.params.id);
     //console.log(destroyIndex);
 
     if (destroyIndex === -1) {
