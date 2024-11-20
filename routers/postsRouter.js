@@ -24,7 +24,7 @@ router.patch("/:slug", (req, res) => {
 });
 
 router.delete("/:slug", (req, res) => {
-
+    functions.destroy(req, res);
 });
 
 module.exports = router;

@@ -6,7 +6,8 @@ function index(req, res) {
 }
 
 function show(req, res) {
-    console.log("show");
+    //console.log("show");
+    res.json(postList.find((post) => post.slug === req.params.slug));
 }
 
 function store(req, res) {
@@ -22,7 +23,14 @@ function modify(req, res) {
 }
 
 function destroy(req, res) {
-    console.log("destroy");
+    //console.log("destroy");
+    let destroyIndex = postList.findIndex((post) => post.slug === req.params.slug);
+    //console.log(destroyIndex);
+    postList.splice(destroyIndex, 1);
+
+    res.status(204);
+    res.send();
+    console.log(postList);
 }
 
 module.exports = { index, show, store, update, modify, destroy };
