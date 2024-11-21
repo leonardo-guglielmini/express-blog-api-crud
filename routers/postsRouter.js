@@ -20,7 +20,7 @@ router.put("/:id", (req, res) => {
 });
 
 router.patch("/:id", (req, res) => {
-
+    functions.modify(req, res);
 });
 
 router.delete("/:id", (req, res) => {

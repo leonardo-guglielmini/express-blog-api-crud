@@ -78,7 +78,39 @@ function update(req, res) {
 }
 
 function modify(req, res) {
-    console.log("modify");
+    //console.log("modify");
+    const slugId = req.params.id;
+    const id = parseInt(req.params.id);
+
+    const post = postList.find((post) => post.slug === slugId || post.id === id);
+    if (!post) {
+        res.status(404);
+        return res.json({
+            error: "Post not found"
+        })
+    }
+
+    const { title, content, image, tags } = req.body;
+
+    if (title) {
+        post.title = title;
+        let slug = title.toLowerCase().split(" ").join("-");
+        post.slug = slug;
+    }
+    if (content) {
+        post.content = content;
+    }
+    if (image) {
+        post.image = image;
+    }
+    if (tags) {
+        post.tags = tags;
+    }
+
+    console.log(post);
+    //console.log(postList);
+
+    res.send("Post modified successfully");
 }
 
 function destroy(req, res) {
