@@ -36,6 +36,13 @@ function show(req, res) {
 function store(req, res) {
     //console.log("store");
     const { title, content, image, tags } = req.body;
+
+    if (!title || !content || !image || !tags) {
+        res.status(406);
+        return res.json({
+            error: "One or more body values are undefined"
+        })
+    }
     let slug = title.toLowerCase().split(" ").join("-");
     //console.log(title, content, image, tags);
 
@@ -46,6 +53,8 @@ function store(req, res) {
 
     console.log(post);
     //console.log(postList);
+
+    res.status(201);
     res.send("Post created successfully")
 }
 
@@ -63,6 +72,12 @@ function update(req, res) {
     }
 
     const { title, content, image, tags } = req.body;
+    if (!title || !content || !image || !tags) {
+        res.status(406);
+        return res.json({
+            error: "One or more body values are undefined"
+        })
+    }
     let slug = title.toLowerCase().split(" ").join("-");
 
     post.title = title;
@@ -74,6 +89,7 @@ function update(req, res) {
     console.log(post);
     //console.log(postList);
 
+    res.status(201);
     res.send("Post updated successfully");
 }
 
@@ -110,6 +126,7 @@ function modify(req, res) {
     console.log(post);
     //console.log(postList);
 
+    res.status(201);
     res.send("Post modified successfully");
 }
 
