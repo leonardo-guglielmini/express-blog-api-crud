@@ -18,7 +18,11 @@ function index(req, res) {
 
 function show(req, res) {
     //console.log("show");
-    let post = postList.find((post) => post.slug === req.params.id || post.id === req.params.id)
+    const slugId = req.params.id;
+    const id = parseInt(req.params.id);
+
+    let post = postList.find((post) => post.slug === slugId || post.id === id)
+    console.log(id);
 
     if (!post) {
         res.status(404);
@@ -33,19 +37,44 @@ function store(req, res) {
     //console.log("store");
     const { title, content, image, tags } = req.body;
     let slug = title.toLowerCase().split(" ").join("-");
-    console.log(title, content, image, tags);
+    //console.log(title, content, image, tags);
 
     lastIndex++;
 
     const post = { title, slug, id: lastIndex, content, image, tags };
-    console.log(post);
-
     postList.push(post);
-    console.log(postList);
+
+    console.log(post);
+    //console.log(postList);
+    res.send("Post created successfully")
 }
 
 function update(req, res) {
-    console.log("update");
+    //console.log("update");
+    const slugId = req.params.id;
+    const id = parseInt(req.params.id);
+
+    const post = postList.find((post) => post.slug === slugId || post.id === id);
+    if (!post) {
+        res.status(404);
+        return res.json({
+            error: "Post not found"
+        })
+    }
+
+    const { title, content, image, tags } = req.body;
+    let slug = title.toLowerCase().split(" ").join("-");
+
+    post.title = title;
+    post.slug = slug;
+    post.content = content;
+    post.image = image;
+    post.tags = tags;
+
+    console.log(post);
+    //console.log(postList);
+
+    res.send("Post updated successfully");
 }
 
 function modify(req, res) {
