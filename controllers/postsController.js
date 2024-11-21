@@ -1,4 +1,5 @@
 const postList = require("../data/posts.js");
+let lastIndex = postList.length;
 
 function index(req, res) {
     //console.log("index");
@@ -29,7 +30,8 @@ function show(req, res) {
 }
 
 function store(req, res) {
-    console.log("store");
+    //console.log("store");
+
 }
 
 function update(req, res) {
