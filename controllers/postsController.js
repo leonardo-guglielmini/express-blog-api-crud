@@ -1,8 +1,11 @@
 const postList = require("../data/posts.js");
+const customFn = require("../customFunctions/crudRelated.js");
+
 let lastIndex = postList.length;
 
 function index(req, res) {
     //console.log("index");
+
     let taggedPostList = postList;
     //console.log(req);
 
@@ -18,11 +21,8 @@ function index(req, res) {
 
 function show(req, res) {
     //console.log("show");
-    const slugId = req.params.id;
-    const id = parseInt(req.params.id);
 
-    let post = postList.find((post) => post.slug === slugId || post.id === id)
-    console.log(id);
+    let post = customFn.findPost(postList, req);
 
     if (!post) {
         res.status(404);
@@ -35,6 +35,7 @@ function show(req, res) {
 
 function store(req, res) {
     //console.log("store");
+
     const { title, content, image, tags } = req.body;
 
     if (!title || !content || !image || !tags) {
@@ -60,10 +61,9 @@ function store(req, res) {
 
 function update(req, res) {
     //console.log("update");
-    const slugId = req.params.id;
-    const id = parseInt(req.params.id);
 
-    const post = postList.find((post) => post.slug === slugId || post.id === id);
+    let post = customFn.findPost(postList, req);
+
     if (!post) {
         res.status(404);
         return res.json({
@@ -95,10 +95,9 @@ function update(req, res) {
 
 function modify(req, res) {
     //console.log("modify");
-    const slugId = req.params.id;
-    const id = parseInt(req.params.id);
 
-    const post = postList.find((post) => post.slug === slugId || post.id === id);
+    let post = customFn.findPost(postList, req);
+
     if (!post) {
         res.status(404);
         return res.json({
@@ -133,15 +132,17 @@ function modify(req, res) {
 function destroy(req, res) {
     //console.log("destroy");
 
-    let destroyIndex = postList.findIndex((post) => post.slug === req.params.id || post.id === req.params.id);
-    //console.log(destroyIndex);
+    let post = customFn.findPost(postList, req);
 
-    if (destroyIndex === -1) {
+    if (!post) {
         res.status(404);
-        return res.json({ error: "Post not found" });
+        return res.json({
+            error: "Post not found"
+        })
     }
+    let index = (postList.indexOf(post));
 
-    postList.splice(destroyIndex, 1);
+    postList.splice(index, 1);
 
     res.status(204);
     res.send();
