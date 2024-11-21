@@ -31,7 +31,17 @@ function show(req, res) {
 
 function store(req, res) {
     //console.log("store");
+    const { title, content, image, tags } = req.body;
+    let slug = title.toLowerCase().split(" ").join("-");
+    console.log(title, content, image, tags);
 
+    lastIndex++;
+
+    const post = { title, slug, id: lastIndex, content, image, tags };
+    console.log(post);
+
+    postList.push(post);
+    console.log(postList);
 }
 
 function update(req, res) {
