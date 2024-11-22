@@ -46,6 +46,7 @@ function store(req, res) {
 function update(req, res) {
     //console.log("update");
 
+    const { title, content, image, tags } = req.body;
     let slug = title.toLowerCase().split(" ").join("-");
 
     req.post.title = title;
