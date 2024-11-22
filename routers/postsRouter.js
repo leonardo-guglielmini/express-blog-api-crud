@@ -1,6 +1,7 @@
 const functions = require("../controllers/postsController.js");
 const postList = require("../data/posts.js");
 const express = require("express");
+const validateBody = require("../middlewares/validateBody.js");
 
 const router = express.Router();
 
@@ -22,9 +23,9 @@ router.get("/", (functions.index));
 
 router.get("/:id", (functions.show));
 
-router.post("/", (functions.store));
+router.post("/", (router.use(validateBody), functions.store));
 
-router.put("/:id", (functions.update));
+router.put("/:id", (router.use(validateBody), functions.update));
 
 router.patch("/:id", (functions.modify));
 

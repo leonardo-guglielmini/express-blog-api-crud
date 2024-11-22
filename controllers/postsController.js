@@ -28,12 +28,6 @@ function store(req, res) {
 
     const { title, content, image, tags } = req.body;
 
-    if (!title || !content || !image || !tags) {
-        res.status(406);
-        return res.json({
-            error: "One or more body values are undefined"
-        })
-    }
     let slug = title.toLowerCase().split(" ").join("-");
     //console.log(title, content, image, tags);
 
@@ -52,13 +46,6 @@ function store(req, res) {
 function update(req, res) {
     //console.log("update");
 
-    const { title, content, image, tags } = req.body;
-    if (!title || !content || !image || !tags) {
-        res.status(406);
-        return res.json({
-            error: "One or more body values are undefined"
-        })
-    }
     let slug = title.toLowerCase().split(" ").join("-");
 
     req.post.title = title;
