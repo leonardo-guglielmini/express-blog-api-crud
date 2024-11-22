@@ -1,30 +1,33 @@
 const functions = require("../controllers/postsController.js");
+const postList = require("../data/posts.js");
 const express = require("express");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    functions.index(req, res);
-});
+router.param("id", (req, res, next, id) => {
+    const post = postList.find((post) => post.id === parseInt(id) || post.slug === id);
 
-router.get("/:id", (req, res) => {
-    functions.show(req, res);
-});
+    if (post) {
+        req.post = post;
+        next()
+    } else {
+        res.status(404);
+        res.json({
+            error: "Post not found"
+        })
+    }
+})
 
-router.post("/", (req, res) => {
-    functions.store(req, res);
-});
+router.get("/", (functions.index));
 
-router.put("/:id", (req, res) => {
-    functions.update(req, res);
-});
+router.get("/:id", (functions.show));
 
-router.patch("/:id", (req, res) => {
-    functions.modify(req, res);
-});
+router.post("/", (functions.store));
 
-router.delete("/:id", (req, res) => {
-    functions.destroy(req, res);
-});
+router.put("/:id", (functions.update));
+
+router.patch("/:id", (functions.modify));
+
+router.delete("/:id", (functions.destroy));
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const postList = require("../data/posts.js");
-const customFn = require("../customFunctions/crudRelated.js");
 
 let lastIndex = postList.length;
 
@@ -21,16 +20,7 @@ function index(req, res) {
 
 function show(req, res) {
     //console.log("show");
-
-    let post = customFn.findPost(postList, req);
-
-    if (!post) {
-        res.status(404);
-        post = {
-            error: "Post not found"
-        }
-    }
-    res.json(post);
+    res.json(req.post);
 }
 
 function store(req, res) {
@@ -62,15 +52,6 @@ function store(req, res) {
 function update(req, res) {
     //console.log("update");
 
-    let post = customFn.findPost(postList, req);
-
-    if (!post) {
-        res.status(404);
-        return res.json({
-            error: "Post not found"
-        })
-    }
-
     const { title, content, image, tags } = req.body;
     if (!title || !content || !image || !tags) {
         res.status(406);
@@ -80,13 +61,13 @@ function update(req, res) {
     }
     let slug = title.toLowerCase().split(" ").join("-");
 
-    post.title = title;
-    post.slug = slug;
-    post.content = content;
-    post.image = image;
-    post.tags = tags;
+    req.post.title = title;
+    req.post.slug = slug;
+    req.post.content = content;
+    req.post.image = image;
+    req.post.tags = tags;
 
-    console.log(post);
+    console.log(req.post);
     //console.log(postList);
 
     res.status(201);
@@ -96,33 +77,24 @@ function update(req, res) {
 function modify(req, res) {
     //console.log("modify");
 
-    let post = customFn.findPost(postList, req);
-
-    if (!post) {
-        res.status(404);
-        return res.json({
-            error: "Post not found"
-        })
-    }
-
     const { title, content, image, tags } = req.body;
 
     if (title) {
-        post.title = title;
+        req.post.title = title;
         let slug = title.toLowerCase().split(" ").join("-");
-        post.slug = slug;
+        req.post.slug = slug;
     }
     if (content) {
-        post.content = content;
+        req.post.content = content;
     }
     if (image) {
-        post.image = image;
+        req.post.image = image;
     }
     if (tags) {
-        post.tags = tags;
+        req.post.tags = tags;
     }
 
-    console.log(post);
+    console.log(req.post);
     //console.log(postList);
 
     res.status(201);
@@ -131,16 +103,7 @@ function modify(req, res) {
 
 function destroy(req, res) {
     //console.log("destroy");
-
-    let post = customFn.findPost(postList, req);
-
-    if (!post) {
-        res.status(404);
-        return res.json({
-            error: "Post not found"
-        })
-    }
-    let index = (postList.indexOf(post));
+    let index = (postList.indexOf(req.post));
 
     postList.splice(index, 1);
 
