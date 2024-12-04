@@ -25,6 +25,7 @@ function show(req, res) {
 
 function store(req, res) {
     //console.log("store");
+    validateBody(req)
 
     const { title, content, image, tags, published } = req.body;
 
@@ -45,6 +46,7 @@ function store(req, res) {
 
 function update(req, res) {
     //console.log("update");
+    validateBody(req)
 
     const { title, content, image, tags } = req.body;
     let slug = title.toLowerCase().split(" ").join("-");
@@ -91,13 +93,45 @@ function modify(req, res) {
 
 function destroy(req, res) {
     //console.log("destroy");
-    let index = (postList.indexOf(req.post));
+    let index = (postList.indexOf(req.params.id));
 
     postList.splice(index, 1);
 
     res.status(204);
     res.send();
     console.log(postList);
+}
+
+function validateBody(req) {
+    let errors = [];
+    let { title, content, image, tags } = req.body;
+    console.log(title, content, image, tags)
+
+    if (!title) {
+        let error = "Title missing";
+        errors.push(error);
+    }
+    if (!content) {
+        console.log("no content")
+        let error = "Content missing";
+        errors.push(error);
+    }
+    // if (!image) {
+    //     let error = "Image missing";
+    //     errors.push(error);
+    // }
+    if (!tags) {
+        let error = "Tags missing";
+        errors.push(error);
+    }
+
+    if (errors.length) {
+        res.status(406);
+        return res.json({
+            error: "Invalid request",
+            message: errors
+        })
+    }
 }
 
 module.exports = { index, show, store, update, modify, destroy };
