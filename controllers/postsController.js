@@ -26,14 +26,14 @@ function show(req, res) {
 function store(req, res) {
     //console.log("store");
 
-    const { title, content, image, tags } = req.body;
+    const { title, content, image, tags, published } = req.body;
 
     let slug = title.toLowerCase().split(" ").join("-");
     //console.log(title, content, image, tags);
 
     lastIndex++;
 
-    const post = { title, slug, id: lastIndex, content, image, tags };
+    const post = { title, slug, id: lastIndex, content, image, tags, published };
     postList.push(post);
 
     console.log(post);

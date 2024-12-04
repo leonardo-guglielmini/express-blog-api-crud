@@ -10,10 +10,10 @@ function validateBody(req, res, next) {
         let error = "Content missing";
         errors.push(error);
     }
-    if (!image) {
-        let error = "Image missing";
-        errors.push(error);
-    }
+    // if (!image) {
+    //     let error = "Image missing";
+    //     errors.push(error);
+    // }
     if (!tags) {
         let error = "Tags missing";
         errors.push(error);

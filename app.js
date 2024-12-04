@@ -2,6 +2,7 @@ const express = require("express");
 const postsRouter = require("./routers/postsRouter.js");
 const errorHandler = require("./middlewares/errorHandler.js");
 const notFound = require("./middlewares/endpointNotFound.js");
+var cors = require('cors')
 
 
 
@@ -10,6 +11,8 @@ const port = 3000;
 
 app.use(express.static("public"));
 app.use(express.json())
+
+app.use(cors())
 
 app.get("/", (req, res) => {
     //throw new Error("Test errorHandler");
