@@ -93,7 +93,7 @@ function modify(req, res) {
 
 function destroy(req, res) {
     //console.log("destroy");
-    let index = (postList.indexOf(req.params.id));
+    let index = (postList.indexOf(req.post));
 
     postList.splice(index, 1);
 
